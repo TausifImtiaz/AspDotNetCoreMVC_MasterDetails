@@ -1,0 +1,101 @@
+﻿@model AspDotNetCore_MasterDetails.Models.Applicant
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <h1>Edit Applicant</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label">Gender</label>
+                    <input asp-for="Gender" class="form-control" />
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label">Age</label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Qualification" class="control-label">Qualification</label>
+                    <input asp-for="Qualification" class="form-control" />
+                    <span asp-validation-for="Qualification" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalExperience" class="control-label">Total Experience</label>
+                    <input asp-for="TotalExperience" class="form-control" />
+                    <span asp-validation-for="TotalExperience" class="text-danger"></span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                {
+                    <div class="form-group">
+                        <label>Current Photo</label>
+                        <img src="@Url.Content("~/Images/" + Model.PhotoUrl)" alt="Current Photo" class="img-thumbnail" style="max-width:200px;" />
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="ProfilePhoto" class="control-label">Profile Photo</label>
+                    <div class="custom-file">
+                        <input type="file" asp-for="ProfilePhoto" class="custom-file-input" id="customFile" onchange="previewFile(this)" />
+                        <label class="custom-file-label" for="customFile">Choose Image</label>
+                    </div>
+                    <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+                    <!-- Display the preview of the selected file -->
+                    <img id="preview" src="#" alt="Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                </div>
+                <h3>Experiences</h3>
+                @for (int i = 0; i < Model.Experience.Count; i++)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <input type="hidden" asp-for="Experience[i].ExperienceId" />
+                            <div class="form-group">
+                                <label asp-for="Experience[i].CompanyName" class="control-label">Company Name</label>
+                                <input asp-for="Experience[i].CompanyName" class="form-control" />
+                                <span asp-validation-for="Experience[i].CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Experience[i].Designation" class="control-label">Designation</label>
+                                <input asp-for="Experience[i].Designation" class="form-control" />
+                                <span asp-validation-for="Experience[i].Designation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Experience[i].YearsWorked" class="control-label">Years Worked</label>
+                                <input asp-for="Experience[i].YearsWorked" class="form-control" />
+                                <span asp-validation-for="Experience[i].YearsWorked" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function previewFile(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#preview').attr('src', e.target.result).show();
+            }
+            reader.readAsDataURL(file);
+        }
+    </script>
+}

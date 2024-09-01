@@ -1,0 +1,94 @@
+﻿@model AspDotNetCore_MasterDetails.Models.Applicant
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">View Applicant</h4>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input asp-for="Name" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Gender</label>
+                        <input asp-for="Gender" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Age</label>
+                        <input asp-for="Age" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Qualification</label>
+                        <input asp-for="Qualification" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Total Experience</label>
+                        <input asp-for="TotalExperience" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Profile Photo</label>
+                        <div>
+                            <img src="~/Images/@Model.PhotoUrl" class="img-fluid" height="80" width="80" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Work Experience</label>
+                        <table id="ExpTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Designation</th>
+                                    <th>Years Worked</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exp in Model.Experience)
+                                {
+                                    <tr>
+                                        <td>@exp.CompanyName</td>
+                                        <td>@exp.Designation</td>
+                                        <td>@exp.YearsWorked</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a asp-action="Index" class="btn btn-secondary">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
